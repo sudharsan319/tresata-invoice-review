@@ -131,6 +131,14 @@ def start_upload(kind: Literal['invoice', 'purchase_orders', 'vendors', 'history
             file.file.close()
 
 
+@app.get('/api/uploads/active')
+def active_upload():
+    # Recover a live upload when the browser reloads before it stores the job ID.
+    with upload_lock:
+        active = next((job for job in upload_jobs.values() if job['status'] in ('queued', 'running')), None)
+        return copy.deepcopy(active) if active else None
+
+
 @app.get('/api/uploads/{job_id}')
 def get_upload(job_id: str):
     # Independent of the workspace lock: progress remains readable during an AI call.

@@ -39,6 +39,7 @@ import AIReview from "./AIReview";
 import PolicyMenu from "./PolicyMenu";
 import PurchaseOrderDraftForm from "./PurchaseOrderDraftForm";
 import UploadProgress, { ProcessingTrace } from "./UploadProgress";
+import { clearUploadJob, readReviewTab, readUploadJob, readView, saveReviewTab, saveUploadJob, saveView, type SavedView } from "./persistence";
 import type {
   Check as CheckType,
   Decision,
@@ -244,24 +245,25 @@ function Modal({
 }
 
 export default function App() {
+  const [restoredView] = useState(readView);
   const [theme, setTheme] = useState<"light" | "dark">(
     () => document.documentElement.dataset.theme === "dark" ? "dark" : "light",
   );
   const [workspace, setWorkspace] = useState<Workspace | null>(null);
-  const [page, setPage] = useState("workspace");
-  const [filter, setFilter] = useState<Decision | "all" | "attention">("all");
-  const [query, setQuery] = useState("");
-  const [poQuery, setPoQuery] = useState("");
-  const [poStatus, setPoStatus] = useState<"all" | "approved" | "other">("all");
-  const [selectedPo, setSelectedPo] = useState<string | null>(null);
-  const [selectedPoDraft, setSelectedPoDraft] = useState<string | null>(null);
+  const [page, setPage] = useState<string>(restoredView.page);
+  const [filter, setFilter] = useState<Decision | "all" | "attention">(restoredView.filter);
+  const [query, setQuery] = useState(restoredView.query);
+  const [poQuery, setPoQuery] = useState(restoredView.poQuery);
+  const [poStatus, setPoStatus] = useState<"all" | "approved" | "other">(restoredView.poStatus);
+  const [selectedPo, setSelectedPo] = useState<string | null>(restoredView.selectedPo);
+  const [selectedPoDraft, setSelectedPoDraft] = useState<string | null>(restoredView.selectedPoDraft);
   const [busy, setBusy] = useState("");
   const [notice, setNotice] = useState<{
     message: string;
     error: boolean;
   } | null>(null);
-  const [upload, setUpload] = useState<string | null>(() => localStorage.getItem("ledger-active-upload") ? "invoice" : null);
-  const [selected, setSelected] = useState<string | null>(null);
+  const [upload, setUpload] = useState<string | null>(() => readUploadJob()?.kind || null);
+  const [selected, setSelected] = useState<string | null>(restoredView.selected);
   const [confirmClear, setConfirmClear] = useState(false);
   const [removeId, setRemoveId] = useState<string | null>(null);
   const [menu, setMenu] = useState(false);
@@ -277,7 +279,24 @@ export default function App() {
   };
   useEffect(() => {
     void refresh();
+    if (!readUploadJob()) {
+      void api<UploadJob | null>("/uploads/active").then((active) => {
+        if (active) {
+          saveUploadJob({ id: active.id, kind: active.kind });
+          setUpload((current) => current || active.kind);
+        }
+      }).catch(() => { /* Workspace refresh reports connection errors. */ });
+    }
   }, []);
+  useEffect(() => {
+    saveView({ page: page as SavedView["page"], filter, query, poQuery, poStatus, selected, selectedPo, selectedPoDraft });
+  }, [page, filter, query, poQuery, poStatus, selected, selectedPo, selectedPoDraft]);
+  useEffect(() => {
+    if (!workspace) return;
+    if (selected && !workspace.reviews.some((review) => review.id === selected)) setSelected(null);
+    if (selectedPo && !workspace.purchase_orders.some((po) => po.po_number === selectedPo)) setSelectedPo(null);
+    if (selectedPoDraft && !workspace.po_drafts?.[selectedPoDraft]) setSelectedPoDraft(null);
+  }, [workspace, selected, selectedPo, selectedPoDraft]);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
     document.querySelector('meta[name="theme-color"]')?.setAttribute(
@@ -1075,15 +1094,16 @@ export default function App() {
       {upload && (
         <UploadModal
           initialKind={upload}
-          onReview={(id) => { setUpload(null); setSelected(id); }}
-          onPoDraft={(id) => { setUpload(null); setPage("purchase_orders"); setSelectedPoDraft(id); }}
-          onClose={() => setUpload(null)}
+          onReview={(id) => { clearUploadJob(); setUpload(null); setSelected(id); }}
+          onPoDraft={(id) => { clearUploadJob(); setUpload(null); setPage("purchase_orders"); setSelectedPoDraft(id); }}
+          onClose={() => { clearUploadJob(); setUpload(null); }}
           update={update}
           notify={notify}
         />
       )}
       {selectedReview && (
         <ReviewDrawer
+          key={selectedReview.id}
           aiEnabled={workspace?.ai_settings?.ready || false}
           processingTrace={workspace?.documents.find(d => d.id === selected)?.processing_trace}
           review={selectedReview}
@@ -1225,10 +1245,11 @@ function UploadModal({
 }) {
   const [kind, setKind] = useState(initialKind);
   const [files, setFiles] = useState<File[]>([]);
-  const [busy, setBusy] = useState(!!localStorage.getItem("ledger-active-upload"));
-  const [jobId, setJobId] = useState<string | null>(() => localStorage.getItem("ledger-active-upload"));
+  const [busy, setBusy] = useState(!!readUploadJob());
+  const [jobId, setJobId] = useState<string | null>(() => readUploadJob()?.id || null);
   const [job, setJob] = useState<UploadJob | null>(null);
   const [monitorError, setMonitorError] = useState("");
+  const notifyOnCompletion = useRef(!readUploadJob());
   const callbacks = useRef({ update, notify });
   callbacks.current = { update, notify };
   useEffect(() => {
@@ -1245,10 +1266,11 @@ function UploadModal({
           const state = await api<Workspace>("/workspace");
           if (cancelled) return;
           callbacks.current.update(state);
-          localStorage.removeItem("ledger-active-upload");
           setBusy(false);
-          if (next.status === "completed" && next.accepted.length)
+          if (next.status === "completed" && next.accepted.length && notifyOnCompletion.current) {
             callbacks.current.notify(`${next.accepted.length} document(s) saved. Processing results are ready.`);
+            notifyOnCompletion.current = false;
+          }
           return;
         }
       } catch (e) {
@@ -1256,7 +1278,9 @@ function UploadModal({
         const message = (e as Error).message;
         setMonitorError(message);
         if (message.includes("progress is unavailable")) {
-          localStorage.removeItem("ledger-active-upload");
+          clearUploadJob();
+          setJobId(null);
+          setJob(null);
           setBusy(false);
           return;
         }
@@ -1288,7 +1312,8 @@ function UploadModal({
     files.forEach((file) => form.append("files", file));
     try {
       const next = await api<UploadJob>("/uploads", { method: "POST", body: form });
-      localStorage.setItem("ledger-active-upload", next.id);
+      notifyOnCompletion.current = true;
+      saveUploadJob({ id: next.id, kind });
       setJob(next);
       setJobId(next.id);
     } catch (e) {
@@ -1528,12 +1553,13 @@ function ReviewDrawer({
   update: (w: Workspace) => void;
   notify: (s: string, error?: boolean) => void;
 }) {
-  const [tab, setTab] = useState("decision");
+  const [tab, setTab] = useState(() => readReviewTab(review.id));
   const [editing, setEditing] = useState(false);
   const [showPassed, setShowPassed] = useState(false);
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
   const panel = useRef<HTMLDivElement>(null);
+  useEffect(() => { saveReviewTab(review.id, tab); }, [review.id, tab]);
   useEffect(() => {
     panel.current?.focus();
     const key = (e: KeyboardEvent) => {

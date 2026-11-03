@@ -149,6 +149,7 @@ def test_progress_available_during_slow_extraction_and_blocks_duplicate_job(clie
         running = client.get(f'/api/uploads/{job_id}').json()
         assert time.monotonic() - started < 1
         assert running['status'] == 'running'
+        assert client.get('/api/uploads/active').json()['id'] == job_id
         assert running['files'][0]['events'][-1]['model'] == 'synthetic/model'
         assert not any(e.get('code') for e in running['files'][0]['events'])
         second = client.post('/api/uploads', data={'kind': 'invoice'}, files={'files': (name, data)})
@@ -157,6 +158,7 @@ def test_progress_available_during_slow_extraction_and_blocks_duplicate_job(clie
         release.set()
         finished = wait_finished(client, job_id)
     assert finished['status'] == 'completed'
+    assert client.get('/api/uploads/active').json() is None
     assert any(e['status'] == 'warning' and e['stage'] == 'ai' for e in finished['files'][0]['events'])
     review = client.get('/api/workspace').json()['reviews'][0]
     assert review['decision'] == 'procurement'

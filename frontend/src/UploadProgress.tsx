@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight, Check, Circle, CircleAlert, FileText, LoaderCircle, ShieldCheck, Sparkles } from "lucide-react";
 import type { ProcessingEvent, UploadJob } from "./types";
+import { readUploadFile, saveUploadFile } from "./persistence";
 
 const stages = [
   ["validation", "Receive"], ["reading", "Read pages"],
@@ -80,8 +81,9 @@ export function ProcessingTrace({ events, live = false, failed = false, referenc
 }
 
 export default function UploadProgress({ job, onReview, onPoDraft }: { job: UploadJob; onReview: (id: string) => void; onPoDraft: (id: string) => void }) {
-  const [selected, setSelected] = useState(job.files[0]?.id);
+  const [selected, setSelected] = useState(() => readUploadFile(job.id) || job.files[0]?.id);
   const file = job.files.find(f => f.id === selected) || job.files[0];
+  useEffect(() => { if (file) saveUploadFile(job.id, file.id); }, [job.id, file?.id]);
   const live = job.status === "running" || job.status === "queued";
   const finished = job.files.filter(f => f.status === "completed" || f.status === "failed").length;
   return <section className="upload-progress" aria-label="Live document processing">

@@ -10,6 +10,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import { api } from "./api";
+import { clearAIJob, readAIJob, saveAIJob } from "./persistence";
 import type { AIConfig, AIJob, AITask } from "./ai-types";
 import type { Workspace } from "./types";
 
@@ -65,8 +66,8 @@ export function ReprocessButton({
   disabled?: boolean;
 }) {
   const [job, setJob] = useState<AIJob | null>(null);
-  const [jobId, setJobId] = useState<string | null>(null);
-  const [busy, setBusy] = useState(false);
+  const [jobId, setJobId] = useState<string | null>(() => readAIJob(documentId));
+  const [busy, setBusy] = useState(() => !!readAIJob(documentId));
   useEffect(() => {
     if (!jobId) return;
     let active = true;
@@ -76,6 +77,7 @@ export function ReprocessButton({
         if (!active) return;
         setJob(result);
         if (result.status !== "running") {
+          clearAIJob(documentId);
           setJobId(null);
           setBusy(false);
           update(await api<Workspace>("/workspace"));
@@ -88,6 +90,7 @@ export function ReprocessButton({
         }
       } catch (e) {
         if (active) {
+          clearAIJob(documentId);
           setJobId(null);
           setBusy(false);
           notify((e as Error).message, true);
@@ -111,6 +114,7 @@ export function ReprocessButton({
           document_ids: documentId ? [documentId] : null,
         }),
       });
+      saveAIJob(documentId, result.id);
       setJob(result);
       setJobId(result.id);
     } catch (e) {
