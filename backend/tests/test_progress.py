@@ -7,7 +7,7 @@ import time
 import httpx
 import fitz
 import pytest
-from PIL import Image
+from PIL import Image, ImageDraw
 from fastapi.testclient import TestClient
 
 from app import ai, demo, progress, service, store
@@ -205,6 +205,33 @@ def test_live_po_pdf_upload_stays_pending_without_rechecking_invoices(client):
     workspace = client.get('/api/workspace').json()
     assert workspace['purchase_orders'] == []
     assert job['accepted'][0]['id'] in workspace['po_drafts']
+
+
+def test_live_po_image_without_extension_becomes_draft(client):
+    image = Image.new('RGB', (900, 350), 'white')
+    draw = ImageDraw.Draw(image)
+    for index, line in enumerate(('Purchase Order Number: PO-IMAGE-1', 'Vendor Name: Acme',
+                                  'Currency: INR', 'Amount Basis: net', 'Net Amount: 250')):
+        draw.text((35, 35 + index * 55), line, fill='black')
+    buffer = io.BytesIO()
+    image.save(buffer, format='PNG')
+    original = buffer.getvalue()
+    response = client.post('/api/uploads', data={'kind': 'purchase_orders'},
+                           files={'files': ('po-without-extension', original, 'image/png')})
+    assert response.status_code == 202
+    job = wait_finished(client, response.json()['id'])
+    assert job['status'] == 'completed' and not job['errors'], job
+    draft_id = job['accepted'][0]['id']
+    assert job['accepted'][0]['pending_review'] is True
+    workspace = client.get('/api/workspace').json()
+    assert draft_id in workspace['po_drafts']
+    assert workspace['purchase_orders'] == []
+    source = next(item for item in workspace['documents'] if item['id'] == draft_id)
+    assert source['filename'] == 'po-without-extension.png'
+    assert source['methods'] == ['ocr']
+    saved = client.get(f'/api/documents/{draft_id}')
+    assert saved.content == original
+    assert saved.headers['content-type'].startswith('image/png')
 
 
 def test_ai_events_exclude_prompts_secrets_and_raw_model_output(client, monkeypatch):
