@@ -26,6 +26,27 @@ Open **http://127.0.0.1:5173**. Vite proxies `/api` to the backend at port 8000.
 
 If Python reports that `venv` or `ensurepip` is missing on Ubuntu/Debian, install the matching `python3-venv` system package first. All installed application dependencies are isolated in `.venv/` and `frontend/node_modules/`.
 
+### Preload the four-PO, six-invoice test case from the terminal
+
+On a fresh checkout, run this **before** starting the server:
+
+```bash
+./run.sh --seed-selection-demo
+./run.sh
+```
+
+The first command installs backend dependencies if needed, generates synthetic files with current dates, uploads the vendor master and empty invoice-history register, processes four PO PDFs as drafts, confirms those synthetic drafts against their source values, then processes six invoice PDFs. It verifies the expected recommendations and saves the complete workspace in `data/`. It does not start the web server or call OpenRouter. The second command starts the app with that saved workspace.
+
+The seed command refuses to overwrite an existing workspace. To keep your current data and make a separate demo workspace, use the same `AP_DATA_DIR` for both commands:
+
+```bash
+export AP_DATA_DIR="$PWD/data/placement-demo"
+./run.sh --seed-selection-demo
+./run.sh
+```
+
+Expected results: **INV-SEL-001, 002, 003, and 005** are ready for approval; **004** needs clarification because it is scanned; **006** needs procurement review because the split invoices exceed the PO limit. The source pack is in [sample-data/selection-demo](sample-data/selection-demo/README.md).
+
 ## Development history
 
 The initial architecture and decision-engine discussion is available in the [shared ChatGPT conversation](https://chatgpt.com/share/6ae99163-01d8-83ee-93a2-cca3bacb6249). **Codex was used to build the final working application** from that architecture through additional implementation prompts. Examples of those later requests include fixing PDF upload, adding a dark theme, processing purchase orders from PDFs and images, checking split invoices against a PO, and preserving review progress after a reload. The shared conversation covers the architecture discussion; it is not a complete transcript of the later Codex implementation work.

@@ -23,19 +23,22 @@ if [[ ! -f .venv/.requirements-hash ]] || [[ "$(cat .venv/.requirements-hash)" !
   fi
   echo "$AP_REQUIREMENTS_HASH" > .venv/.requirements-hash
 fi
+export PYTHONPATH="$AP_ROOT/backend${PYTHONPATH:+:$PYTHONPATH}"
+# Optional AI and data-directory configuration stays outside source control.
+if [[ -f .env ]]; then
+  set -a
+  source .env
+  set +a
+fi
+if [[ "${1:-}" == '--seed-selection-demo' ]]; then
+  exec .venv/bin/python scripts/seed_selection_demo.py
+fi
 AP_FRONTEND_HASH="$(sha256sum frontend/package-lock.json | cut -d' ' -f1)"
 if [[ ! -d frontend/node_modules ]] || [[ ! -f frontend/node_modules/.dependencies-hash ]] || [[ "$(cat frontend/node_modules/.dependencies-hash)" != "$AP_FRONTEND_HASH" ]]; then
   (cd frontend && npm ci --no-audit --no-fund)
   echo "$AP_FRONTEND_HASH" > frontend/node_modules/.dependencies-hash
 fi
 
-# Optional AI configuration stays outside source control.
-if [[ -f .env ]]; then
-  set -a
-  source .env
-  set +a
-fi
-export PYTHONPATH="$AP_ROOT/backend${PYTHONPATH:+:$PYTHONPATH}"
 if [[ "${1:-}" == '--dev' ]]; then
   echo 'Invoices: http://127.0.0.1:5173  |  API docs: http://127.0.0.1:8000/docs'
   .venv/bin/python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload &
