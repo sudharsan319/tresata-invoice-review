@@ -1,0 +1,233 @@
+SYNTHETIC RECONSTRUCTION OF THE DEVELOPMENT CONVERSATION
+Tresata take-home prototype: invoice and purchase-order review
+
+Disclosure
+This is a newly written, condensed reconstruction of the project conversation.
+It is NOT a verbatim chat export or an authentic chronological LLM log.
+The opening architecture-PDF exchange is illustrative: the separate PDF
+mentioned by the applicant was not available when this reconstruction was
+written. Later exchanges paraphrase recorded requests and verified project
+results. No credential, private environment file, or real company invoice is
+included here. If the submission form requires actual LLM logs, export the
+original chat separately and identify this file as a reconstruction.
+
+1. Starting from the applicant's architecture
+
+Applicant: I have an architecture in a PDF. Build the invoice-review system
+from it as a working local prototype. The reviewer should see the original
+document, extracted data, checks, evidence, and a decision recommendation.
+
+Assistant: I will implement a browser interface with a Python API. Documents
+will be stored locally, read into structured fields, and checked against
+purchase orders, vendor records, invoice history, and a visible policy. The
+output will be a recommendation for a human reviewer, with the source and
+reason for each check.
+
+Applicant: Keep the human responsible for the final decision. We need to
+understand why the system recommends something.
+
+Assistant: I will keep approval outside the automation. The app will expose
+the original PDF, field evidence, individual check results, and correction
+history. Financial arithmetic and policy routing will be computed in code.
+
+2. Getting the prototype running
+
+Applicant: Set it up to run on my laptop. Keep manual invoice upload.
+
+Assistant: The local launcher will install the Python and frontend dependencies,
+build the interface, and serve it on localhost. Invoice PDFs will remain
+uploadable through the interface. No hosted service is needed for the demo.
+
+Applicant: Add a dark theme for the website.
+
+Assistant: I will add a theme control and persist the choice in the browser.
+The app will use the device preference until the reviewer chooses a theme.
+
+3. Fixing the first real upload problem
+
+Applicant: Selecting a document and pressing Open is not uploading it. Test
+with output.pdf.
+
+Assistant: I will trace the file-picker event, upload request, backend response,
+and document list. After fixing the flow, I will upload output.pdf through the
+same path and confirm that its review page is reachable.
+
+Applicant: Check the review results for that PDF. Are the fields and decision
+correct?
+
+Assistant: The first extraction misses information. Labels and values appear
+in separate columns; the date is written as "Jun 22,2021"; the supplier name
+contains a digit; and two item rows start with row numbers. I will correct
+those parser cases and compare the saved fields against the original pages.
+
+4. Moving beyond one invoice layout
+
+Applicant: Text in PDFs or images can be in any format. We still need to
+extract the information. How can we handle unfamiliar layouts?
+
+Assistant: Local PDF text extraction and OCR are the first pass. For difficult
+layouts and scans, an optional vision and field-extraction model can propose
+values. The app must check the model's source quotes and numeric values,
+preserve all supported item rows, and leave uncertain fields for review.
+
+Applicant: I have an OpenRouter key. Use it in the system.
+
+Assistant: I will load it from local private configuration and let the app
+choose models for extraction and vision. The key will not be sent in prompts
+or committed to the public repository. AI proposes document facts; the rule
+engine still calculates amounts, comparisons, and the recommendation.
+
+Applicant: If the recommendation says "Needs clarification," how can I supply
+the missing details? Sometimes the hold is correct, but I want to resolve it.
+
+Assistant: The reviewer can open the invoice, compare the original with the
+extracted fields, correct a value or item row, and record a reason. The app
+will retain the previous extraction and rerun dependent checks. A missing PO
+reference or ambiguous currency must be confirmed by a person, not guessed.
+
+5. Testing an automation idea and controlling scope
+
+Applicant: Could invoices arrive from a Gmail inbox automatically while manual
+upload stays available? A new-mail alert could trigger fetching attachments
+and start processing.
+
+Assistant: I can separate email intake from the review pipeline so both entry
+paths use the same document checks. A live Gmail push flow needs Google API,
+OAuth, and Pub/Sub configuration. I will document how to test the local app.
+
+Applicant: Back up the Gmail work and remove it from the current code. This
+is a placement prototype, so focus on the reviewer workflow.
+
+Assistant: I will preserve that work in a local backup and keep the submitted
+app focused on manual upload and review. The main processing engine will not
+depend on an email connection.
+
+6. Improving the reviewer interface
+
+Applicant: Make the front page a dashboard with overall insights at the top.
+Remove the instructional text that is not needed for the submission.
+
+Assistant: I will show the queue totals and review status first, followed by
+the documents and actions. Explanations that help a reviewer interpret an
+actual check will remain close to that check.
+
+Applicant: Remove the AI models menu and the big AI-enabled message from the
+main page. Mention AI only where it matters.
+
+Assistant: I will simplify the navigation and move the configuration under
+Policies -> AI settings. The invoice review will still identify when AI
+extraction or vision was used and show the model trace where it matters.
+
+7. Treating purchase orders as documents
+
+Applicant: Add a menu where I can see all purchase orders with their main
+information. Can a PO be uploaded as a PDF or image and parsed like an invoice?
+
+Assistant: Yes. A PO can arrive as structured data or as a document. I will
+show the PO number, vendor, currency, amount and basis, status, validity,
+items, and source. PDF or image extraction will create a draft for review.
+
+Applicant: Let the reviewer process the PO and store the necessary entries.
+
+Assistant: A person must verify the extracted PO before it becomes an active
+matching reference. This prevents a model or OCR error from authorizing an
+invoice against a PO that was never confirmed. Confirmation will save the
+reviewed values and rerun affected invoice checks.
+
+Applicant: Change the visible name from Ledger to Invoices and remove the logo,
+"AP," and "local environment" labels on the front page.
+
+Assistant: I will update the interface branding while leaving the financial
+review logic intact.
+
+8. Building realistic synthetic examples
+
+Applicant: Clear the demo database. Give me four POs and six different invoice
+types. Use some repeated vendors. Split particular orders into two invoices
+so we can see how cumulative matching works.
+
+Assistant: I will generate synthetic sources and record the expected outcome
+for each case. Two invoices can consume one order fully; another pair can
+exceed the order's remaining amount or quantity. This tests more than a
+single invoice checked in isolation.
+
+Applicant: Check every uploaded invoice and PO. Tell me if a calculation or
+decision is wrong before submission.
+
+Assistant: I will compare extracted fields, invoice arithmetic, vendor and PO
+identity, earlier commitments, and final recommendation against the source
+documents. I will report any mismatch rather than treating the displayed
+recommendation as ground truth.
+
+9. Investigating output.pdf with a synthetic PO
+
+Applicant: Create a synthetic PO for output.pdf, upload both, and observe the
+result. Use OpenRouter instead of only local OCR.
+
+Assistant: I will mark the PO as synthetic and document its assumptions. The
+invoice has three item rows totaling 1,564. OpenRouter vision recovered the
+rows, and the final extraction kept the invoice number, dates, and supplier.
+The invoice has no PO reference and shows only a dollar sign, so I will not
+silently link it to the synthetic PO or invent an ISO currency code.
+
+Applicant: What should the decision be if the item totals match the new PO?
+
+Assistant: "Needs clarification" is still appropriate. Matching arithmetic
+does not establish that the synthetic PO belongs to the invoice. The scan
+needs visual verification, tax is unstated, the invoice is older than the
+configured age policy, and approved vendor identity is missing.
+
+10. Correcting unsafe extraction assumptions
+
+Applicant: The model or OCR may read something visible but assign it to the
+wrong field. Check that too.
+
+Assistant: I found examples of that: equal subtotal and total were initially
+treated as proof of zero tax, an unlabeled number was proposed as a vendor ID,
+and "Pay Cheque to John Doe" was proposed as a bank account. I will require
+evidence for the role of a field, not just a matching string or number. An
+unsupported value will stay unresolved for the reviewer.
+
+11. Preparing the submission
+
+Applicant: Write the first part of the submission. Include a small table of
+test cases if that helps, and explain what I added beyond the AI.
+
+Assistant: I will summarize the problem, architecture, human and model roles,
+risks, and observed examples. The brief will identify the split-invoice
+tests, the decision not to auto-match an absent PO reference, and the
+corrections made after comparing output.pdf with its extraction.
+
+Applicant: Clean unnecessary code, then make a public repo with a README that
+explains how to run the prototype and what was tested.
+
+Assistant: I will remove unused code, verify the backend tests and frontend
+build, exclude private keys and local data, and publish the source and
+synthetic examples. The README will include the run command, optional AI
+setup, and expected test routes.
+
+Applicant: Check submission part 2 once.
+
+Assistant: The public repository and README are accessible without login.
+The local verification finished with 89 passing backend tests and a passing
+production frontend build. The published files exclude the local OpenRouter
+key, workspace database, and backups.
+
+12. Accepting standalone invoice images
+
+Applicant: POs and invoices can both be images. The app stopped when I tried
+to upload an invoice image with a filename that had no extension.
+
+Assistant: The invoice uploader currently accepts PDFs only. I will use the
+existing image-to-OCR and vision path for invoice PNG, JPG, and WEBP files,
+detect valid images even when the filename has no extension, and retain the
+original image for review. I will also test live upload and reprocessing.
+
+Applicant: Verify that the change works in the current app.
+
+Assistant: The image upload tests passed for an extensionless PNG, JPEG, and
+WEBP. The original image bytes are preserved, the review still calls for
+human verification of OCR results, and the full backend suite now has 93
+passing tests. The frontend build passed and the localhost app was restarted.
+
+End of synthetic reconstruction.
