@@ -4,7 +4,7 @@ Verified through 3 November 2026 in the supplied Linux workspace, using Python 3
 
 | Check | Result |
 | --- | --- |
-| Backend automated tests | **89 passed** |
+| Backend automated tests | **93 passed** |
 | TypeScript type checking + production frontend build | **Passed** |
 | `./run.sh` dependency setup, build, and server startup | **Passed** |
 | `./run.sh --dev` frontend and backend proxy | **Passed** |
@@ -14,6 +14,7 @@ Verified through 3 November 2026 in the supplied Linux workspace, using Python 3
 | Original invoice PDF retrieval | **Passed** |
 | Evidence JSON and summary CSV download | **Passed** |
 | Local scanned-PDF OCR | **Extracted invoice identifier, total, and line item; requires human confirmation** |
+| Invoice image upload | **PNG without an extension, JPEG, and WEBP processed through live upload; original bytes and image content types preserved; reprocessing uses the image for vision input** |
 | OpenRouter integration | **Task routing, private settings, model catalogue, error handling, source validation, semantic confirmation, policy draft activation, and background reprocessing verified; automated provider tests mocked; all five task routes additionally checked live on synthetic data** |
 | Browser interaction / visual QA | **Unavailable: the computer-use tool reported no browser available** |
 

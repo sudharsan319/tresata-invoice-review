@@ -1,6 +1,6 @@
 # Invoices — accounts-payable invoice review
 
-A local application that turns invoice PDFs into an evidence-backed recommendation: **ready for approval**, **needs clarification**, **procurement review**, or **hold for investigation**. There is no login and no hosted service. The frontend uses React, TypeScript, and Vite (Node.js); the backend uses Python and FastAPI.
+A local application that turns invoice PDFs and images into an evidence-backed recommendation: **ready for approval**, **needs clarification**, **procurement review**, or **hold for investigation**. There is no login and no hosted service. The frontend uses React, TypeScript, and Vite (Node.js); the backend uses Python and FastAPI.
 
 ## Run
 
@@ -66,7 +66,7 @@ With the unmodified demo data, the queue contains **3 ready, 4 clarification, 3 
 
 ## Input documents
 
-**Invoices:** PDF only. Native text is extracted with PyMuPDF. Pages with little readable text are rendered and processed by local RapidOCR/ONNX models. Original PDFs and per-field evidence are retained. Files are limited to 20 MB and 30 PDF pages; at most 25 files per request and 120 documents per workspace.
+**Invoices:** PDF, PNG, JPG, or WEBP. Native PDF text is extracted with PyMuPDF; scans and standalone images are processed by local RapidOCR/ONNX models, with optional OpenRouter vision when configured. Original files and per-field evidence are retained. Files are limited to 20 MB and 30 PDF pages; images are limited to 30 megapixels; at most 25 files per request and 120 documents per workspace. A readable image without a filename extension is accepted and given its detected image extension.
 
 **Supporting records:** JSON, CSV, or XLSX; PO PDFs and images are also supported through the review flow, and labelled individual-vendor PDFs are supported. JSON is the clearest format for nested item lines. CSV/XLSX `items` cells can contain a JSON array, and `aliases` can contain either a JSON array or semicolon-separated names. Spreadsheet bank accounts and identifiers with leading zeroes must be stored as text.
 
@@ -150,7 +150,7 @@ A built-in policy is visible until replaced. The policy can also be edited direc
 
 ## Extraction and optional AI
 
-The application works without an API key using local PDF extraction, layout reconstruction, explicit field labels, and local OCR. The local invoice parser handles labelled fields and item columns of description, quantity, unit price, and amount. It deliberately sends unfamiliar layouts or incomplete item extraction to human review.
+The application works without an API key using local PDF extraction, layout reconstruction, explicit field labels, and local OCR for scans and images. The local invoice parser handles labelled fields and item columns of description, quantity, unit price, and amount. It deliberately sends unfamiliar layouts or incomplete item extraction to human review.
 
 Open **Policies → AI settings** to configure OpenRouter. Enter your key directly into the password field, choose task models, enable processing, and save. **Test saved key** calls OpenRouter's key-information endpoint and does not run a paid model. Settings take effect without restarting the server.
 
@@ -195,9 +195,9 @@ UI settings override environment defaults. Existing compatible-provider `AI_BASE
 ```mermaid
 flowchart LR
   UI[React + TypeScript workspace] --> API[Python / FastAPI]
-  API --> PDF[PDF text + local OCR]
-  PDF -. optional .-> AI[AI field extraction]
-  PDF --> Facts[Structured invoice + page evidence]
+  API --> Read[Document text + local OCR]
+  Read -. optional .-> AI[AI field extraction]
+  Read --> Facts[Structured invoice + page evidence]
   AI --> Ground[Validate source quotes and numeric values]
   Ground --> Facts
   Refs[POs / vendors / history / policy] --> Rules[Deterministic review engine]
@@ -225,7 +225,7 @@ cd frontend
 npm run build
 ```
 
-The suite exercises 12 real PDF scenarios plus scanned-PDF OCR, mixed-currency rejection, tax arithmetic, historical and current-batch PO commitments, cumulative quantities, duplicate identity scope, changed bank details, protected PDFs, unsupported policies, CSV/XLSX/PO-PDF imports, source removal, correction audit trails, AI grounding/fallback, and API restrictions. See `VALIDATION.md` for the verified result.
+The suite exercises 12 real PDF scenarios plus scanned-PDF and standalone-image OCR, mixed-currency rejection, tax arithmetic, historical and current-batch PO commitments, cumulative quantities, duplicate identity scope, changed bank details, protected PDFs, unsupported policies, CSV/XLSX/PO-PDF imports, source removal, correction audit trails, AI grounding/fallback, and API restrictions. See `VALIDATION.md` for the verified result.
 
 ## Practical boundaries
 

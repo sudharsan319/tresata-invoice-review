@@ -4,7 +4,7 @@
 
 ## 1. Problem and scope
 
-Accounts payable (AP) reviewers receive invoices as readable PDFs and scans, then compare each one with a purchase order (PO), a vendor master, earlier invoices, and company policy. My problem is the time and uncertainty in making that comparison for **each incoming invoice**, especially when one PO is billed in several parts. A single invoice can have correct arithmetic and still be a duplicate, name a blocked vendor, use changed payment details, or push the cumulative order beyond its limit.
+Accounts payable (AP) reviewers receive invoices as readable PDFs, scans, and images, then compare each one with a purchase order (PO), a vendor master, earlier invoices, and company policy. My problem is the time and uncertainty in making that comparison for **each incoming invoice**, especially when one PO is billed in several parts. A single invoice can have correct arithmetic and still be a duplicate, name a blocked vendor, use changed payment details, or push the cumulative order beyond its limit.
 
 The work matters because a mistaken “ready” decision can move an unsupported bill toward payment, while a mistaken rejection delays a legitimate supplier. I have no measured workload from an AP team. As an **illustrative assumption**, 100 invoices per week at five minutes of cross-checking each would require about 8.3 reviewer hours weekly before resolving exceptions. The prototype aims to reduce routine comparison work while keeping the reviewer responsible for disputed facts and approval.
 
@@ -12,11 +12,11 @@ The prototype covers **company purchasing controls**, illustrated mainly with sy
 
 ## 2. Solution design
 
-An operator uploads invoice PDFs and supporting PO PDFs/images or structured records. The system keeps the original files, extracts fields and item rows, compares them with approved vendor records and prior commitments, and returns a recommendation with individual checks and source excerpts. PO PDFs/images enter as **drafts**; a person reviews their number, vendor, amount basis, status, dates, and lines before they can affect invoice decisions.
+An operator uploads invoice PDFs/images and supporting PO PDFs/images or structured records. The system keeps the original files, extracts fields and item rows, compares them with approved vendor records and prior commitments, and returns a recommendation with individual checks and source excerpts. PO PDFs/images enter as **drafts**; a person reviews their number, vendor, amount basis, status, dates, and lines before they can affect invoice decisions.
 
 ```mermaid
 flowchart LR
-  A[Invoice PDF or scan] --> B[Text reading and OpenRouter vision]
+  A[Invoice PDF or image] --> B[Text reading and OpenRouter vision]
   P[PO PDF or image] --> H[Human confirms PO draft]
   B --> C[Proposed fields and source quotes]
   C --> D[Source and value validation]

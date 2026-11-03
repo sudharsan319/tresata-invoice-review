@@ -1,38 +1,15 @@
 """Extract reviewable purchase-order drafts from PDFs and images."""
 from __future__ import annotations
 
-import io
 import json
 import re
 
-from PIL import Image, ImageOps, UnidentifiedImageError
-
 from . import ai, progress
-from .extraction import _vision_transcribe, extract_invoice, money, normalize, parse_date, read_pdf
+from .extraction import _vision_transcribe, extract_invoice, money, normalize, parse_date
 from .models import Evidence
 
-IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.webp'}
 PO_FIELDS = ('po_number', 'vendor_id', 'vendor_name', 'currency', 'amount',
              'amount_basis', 'status', 'valid_from', 'valid_to')
-
-
-def read_po_image(data: bytes, document_id: str, filename: str) -> tuple[dict, bytes]:
-    """Normalize orientation and render an image as a one-page PDF for OCR."""
-    try:
-        with Image.open(io.BytesIO(data)) as original:
-            if original.width * original.height > 30_000_000:
-                raise ValueError('Image exceeds the 30-megapixel limit. Resize it and try again.')
-            image = ImageOps.exif_transpose(original)
-            image.thumbnail((2200, 2200))
-            image = image.convert('RGB')
-            buffer = io.BytesIO()
-            image.save(buffer, format='PDF', resolution=150)
-    except (UnidentifiedImageError, OSError, Image.DecompressionBombError) as exc:
-        raise ValueError('Could not read this image. Use PNG, JPG, WEBP, or PDF.') from exc
-    pdf_bytes = buffer.getvalue()
-    document = read_pdf(pdf_bytes, document_id, filename)
-    document['notes'].append('Image converted for OCR; verify the PO draft against the original.')
-    return document, pdf_bytes
 
 
 def _label(document: dict, pattern: str) -> tuple[str, Evidence | None]:

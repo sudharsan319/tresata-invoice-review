@@ -1921,13 +1921,16 @@ details[open] > summary > svg:last-child {
   font-size: 10px;
   color: light-dark(#9bae87, #bac7ad);
 }
-.original-preview iframe {
+.original-preview iframe, .original-preview img {
   width: 100%;
   height: calc(100dvh - 360px);
   min-height: 400px;
   border: 1px solid light-dark(#e5eddb, #445134);
   border-radius: 6px;
   background: light-dark(#f1f3ed, #272b20);
+}
+.original-preview img {
+  object-fit: contain;
 }
 .recorded-note {
   border: 1px solid light-dark(#e2ecd4, #455332);
@@ -2748,7 +2751,7 @@ td {
     bottom: 15px;
     padding: 12px;
   }
-  .original-preview iframe {
+  .original-preview iframe, .original-preview img {
     min-height: 380px;
   }
   .original-preview > div > span {

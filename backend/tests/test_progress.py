@@ -1,14 +1,17 @@
 """Exercise live polling against blocked work, failures, and persisted evidence."""
 import json
+import io
 import threading
 import time
 
 import httpx
 import fitz
 import pytest
+from PIL import Image
 from fastapi.testclient import TestClient
 
 from app import ai, demo, progress, service, store
+from app import main
 from app.main import app, upload_jobs, upload_lock
 
 
@@ -58,6 +61,71 @@ def test_live_checks_match_saved_review_and_trace(client):
     trace = workspace['documents'][-1]['processing_trace']
     assert trace == events[:-1]  # Final save event is emitted only after SQLite commits.
     assert all(e['timestamp'] for e in trace)
+
+
+@pytest.mark.parametrize('image_format,filename,mime', [
+    ('PNG', 'image-without-extension', 'image/png'),
+    ('JPEG', 'invoice.jpeg', 'image/jpeg'),
+    ('WEBP', 'invoice.webp', 'image/webp'),
+])
+def test_live_invoice_image_upload_runs_ocr_and_preserves_original(client, image_format, filename, mime):
+    _, _, scanned_pdf = next(item for item in demo.files() if 'scanned-invoice' in item[1])
+    with fitz.open(stream=scanned_pdf, filetype='pdf') as document:
+        png = document[0].get_pixmap(matrix=fitz.Matrix(2, 2)).tobytes('png')
+    with Image.open(io.BytesIO(png)) as image:
+        buffer = io.BytesIO()
+        image.save(buffer, format=image_format)
+    original = buffer.getvalue()
+    response = client.post('/api/uploads', data={'kind': 'invoice'},
+                           files={'files': (filename, original, mime)})
+    assert response.status_code == 202
+    job = wait_finished(client, response.json()['id'])
+    assert job['status'] == 'completed' and not job['errors'], job
+    uploaded = job['files'][0]
+    assert uploaded['status'] == 'completed'
+    assert any(event['stage'] == 'reading' and event['status'] == 'completed' for event in uploaded['events'])
+    workspace = client.get('/api/workspace').json()
+    source = next(item for item in workspace['documents'] if item['id'] == uploaded['id'])
+    assert source['methods'] == ['ocr']
+    assert source['filename'].endswith('.jpg' if image_format == 'JPEG' else '.' + image_format.lower())
+    review = next(item for item in workspace['reviews'] if item['id'] == uploaded['id'])
+    assert review['invoice']['invoice_number'].startswith('NS-')
+    assert any(check['code'] == 'extraction_review' for check in review['checks'])
+    saved = client.get(f'/api/documents/{uploaded["id"]}')
+    assert saved.content == original
+    assert saved.headers['content-type'].startswith(mime)
+
+
+def test_image_invoice_can_be_reprocessed_without_losing_vision_input(client, monkeypatch):
+    _, _, scanned_pdf = next(item for item in demo.files() if 'scanned-invoice' in item[1])
+    with fitz.open(stream=scanned_pdf, filetype='pdf') as document:
+        image = document[0].get_pixmap(matrix=fitz.Matrix(2, 2)).tobytes('png')
+    uploaded = client.post('/api/documents', data={'kind': 'invoice'},
+                           files={'files': ('invoice-image', image, 'image/png')}).json()
+    assert not uploaded['errors']
+    document_id = uploaded['accepted'][0]['id']
+    ai.save_settings(ai.AISettingsUpdate(enabled=True, api_key='synthetic-test-key'))
+    seen = []
+    original_extract = main.extract_invoice
+
+    def local_extract(document, *, pdf_bytes):
+        seen.append(pdf_bytes.startswith(b'%PDF-'))
+        return original_extract(document, use_ai=False)
+
+    monkeypatch.setattr(main, 'extract_invoice', local_extract)
+    response = client.post('/api/ai/reprocess', json={'document_ids': [document_id]})
+    assert response.status_code == 200, response.text
+    deadline = time.monotonic() + 10
+    while time.monotonic() < deadline:
+        job = client.get(f'/api/ai/jobs/{response.json()["id"]}').json()
+        if job['status'] != 'running':
+            break
+        time.sleep(.01)
+    else:
+        pytest.fail('Image reprocessing did not finish')
+    assert job['status'] == 'completed' and not job['errors']
+    assert seen == [True]
+    assert client.get(f'/api/documents/{document_id}').content == image
 
 
 def test_progress_available_during_slow_extraction_and_blocks_duplicate_job(client, monkeypatch):

@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field, ValidationError
 from . import store, demo, progress
 from .models import Correction, Resolution, Policy, Evidence, Invoice, PurchaseOrder, SemanticConfirmation
 from .service import ingest, run_reviews, public_state, audit, validate_purchase_order, MAX_BYTES
-from .extraction import ai_configured, extract_invoice, normalize
+from .extraction import IMAGE_EXTENSIONS, ai_configured, extract_invoice, image_to_pdf, normalize
 from . import ai
 from .interpretation import review_brief
 
@@ -210,7 +210,8 @@ def reprocess_worker(job_id: str, document_ids: list[str]):
                 job['current_file'] = document['filename']
             try:
                 raw = (store.DATA / 'documents' / document['stored_name']).read_bytes()
-                invoice = Invoice.model_validate(extract_invoice(document, pdf_bytes=raw).model_dump())
+                source_pdf = image_to_pdf(raw)[0] if Path(document['filename']).suffix.casefold() in IMAGE_EXTENSIONS else raw
+                invoice = Invoice.model_validate(extract_invoice(document, pdf_bytes=source_pdf).model_dump())
                 with lock:
                     state = store.read_state()
                     target = next((d for d in state['documents'] if d['id'] == document_id), None)

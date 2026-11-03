@@ -8,9 +8,9 @@ from pathlib import Path
 
 from . import store, progress
 from .engine import review_invoice
-from .extraction import read_pdf, extract_invoice, read_rows, normalize
+from .extraction import read_pdf, read_image_document, image_to_pdf, extract_invoice, read_rows, normalize
 from .models import Vendor, PurchaseOrder, HistoricalInvoice, Policy, Invoice, Evidence
-from .po_extraction import IMAGE_EXTENSIONS, extract_po_draft, read_po_image
+from .po_extraction import extract_po_draft
 from . import ai
 from .interpretation import matching_key, propose_item_matches, policy_proposal, fingerprint
 
@@ -81,30 +81,38 @@ def ingest(state: dict, kind: str, filename: str, data: bytes, document_id: str 
         raise ValueError('Workspace limit is 120 documents; remove old documents first.')
     filename = re.sub(r'[^\w .()\-]', '_', Path(filename).name)[:180] or 'document'
     extension = Path(filename).suffix.casefold()
-    if kind == 'invoice' and extension != '.pdf':
-        raise ValueError('Invoices must be PDF files (readable PDFs or scans).')
-    if kind == 'purchase_orders' and extension not in {'.pdf', '.csv', '.json', '.xlsx'} | IMAGE_EXTENSIONS:
-        raise ValueError('Purchase orders must be PDF, PNG, JPG, WEBP, CSV, JSON, or XLSX files.')
+    image_pdf = None
+    if (kind == 'invoice' and extension != '.pdf') or (kind == 'purchase_orders' and extension not in {'.pdf', '.csv', '.json', '.xlsx'}):
+        try:
+            image_pdf, detected_extension = image_to_pdf(data)
+        except ValueError as exc:
+            if str(exc).startswith('Image exceeds'):
+                raise
+            allowed = 'Invoices must be PDF, PNG, JPG, or WEBP files.' if kind == 'invoice' else 'Purchase orders must be PDF, PNG, JPG, WEBP, CSV, JSON, or XLSX files.'
+            raise ValueError(allowed) from exc
+        if extension != detected_extension:
+            stem = filename[:-len(extension)] if extension else filename
+            filename = stem[:180 - len(detected_extension)] + detected_extension
+            extension = detected_extension
     document_id = document_id or str(uuid.uuid4())
     with progress.document_scope(document_id, filename):
         digest = hashlib.sha256(data).hexdigest()
         document = {'id': document_id, 'document_id': document_id, 'filename': filename, 'kind': kind, 'sha256': digest, 'size': len(data), 'uploaded_at': datetime.now().astimezone().isoformat(), 'pages': [], 'notes': [], 'record_count': 0}
         progress.emit('validation', 'completed', 'File accepted', 'File type and size validated; SHA-256 fingerprint recorded.')
         # Do not skip identical invoice PDFs: uploading the same PDF must raise a duplicate alert.
-        pdf_bytes = data
+        pdf_bytes = image_pdf or data
         if extension == '.pdf':
             document.update(read_pdf(data, document_id, filename))
-        elif kind == 'purchase_orders' and extension in IMAGE_EXTENSIONS:
-            read_result, pdf_bytes = read_po_image(data, document_id, filename)
-            document.update(read_result)
+        elif image_pdf is not None:
+            document.update(read_image_document(image_pdf, document_id, filename))
         source = Evidence(document_id=document_id, filename=filename, excerpt='Imported structured reference record.', method='structured upload')
         additions = []
         if kind == 'invoice':
-            document['extracted'] = Invoice.model_validate(extract_invoice(document, pdf_bytes=data).model_dump()).model_dump(mode='json')
+            document['extracted'] = Invoice.model_validate(extract_invoice(document, pdf_bytes=pdf_bytes).model_dump()).model_dump(mode='json')
             document['record_count'] = 1
         else:
             progress.emit('extraction', 'running', 'Reading reference records', 'Validating the supplied reference data and source evidence.')
-            if kind == 'purchase_orders' and extension in {'.pdf'} | IMAGE_EXTENSIONS:
+            if kind == 'purchase_orders' and (extension == '.pdf' or image_pdf is not None):
                 state['po_drafts'][document_id] = extract_po_draft(document, pdf_bytes)
                 document['pending_interpretation'] = True
                 document['notes'].append('PO extraction pending human review; invoice matching is unchanged.')

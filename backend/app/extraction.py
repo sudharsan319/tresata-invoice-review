@@ -11,12 +11,14 @@ from pathlib import Path
 
 import pymupdf as fitz
 from openpyxl import load_workbook
+from PIL import Image, ImageOps, UnidentifiedImageError
 
 from .models import Evidence, Invoice, LineItem
 from . import ai, progress
 
 MAX_PAGES = 30
 MAX_CHARACTERS = 160_000
+IMAGE_EXTENSIONS = {'.png', '.jpg', '.jpeg', '.webp'}
 _ocr = None
 _ocr_lock = threading.Lock()
 
@@ -91,7 +93,7 @@ def _ocr_page(page) -> tuple[str, float]:
 
 
 def read_pdf(data: bytes, document_id: str, filename: str) -> dict:
-    progress.emit('reading', 'running', 'Reading PDF pages', 'Checking native text and table layout; OCR is used for pages without usable text.')
+    progress.emit('reading', 'running', 'Reading document pages', 'Checking native text and table layout; OCR is used for pages without usable text.')
     pages, notes = [], []
     with fitz.open(stream=data, filetype='pdf') as doc:
         if doc.needs_pass:
@@ -131,8 +133,32 @@ def read_pdf(data: bytes, document_id: str, filename: str) -> dict:
             pages.append({'page': index + 1, 'text': text, 'table_rows': table_rows, 'method': method, 'confidence': round(confidence, 3)})
     if sum(len(p['text']) for p in pages) > MAX_CHARACTERS:
         raise ValueError('Too much text in this PDF; split it into smaller files.')
-    progress.emit('reading', 'completed', 'PDF reading complete', f'{len(pages)} page(s) inspected.')
+    progress.emit('reading', 'completed', 'Page reading complete', f'{len(pages)} page(s) inspected.')
     return {'document_id': document_id, 'filename': filename, 'pages': pages, 'notes': notes}
+
+
+def image_to_pdf(data: bytes) -> tuple[bytes, str]:
+    """Make a PDF for the existing OCR/vision pipeline and identify image bytes."""
+    try:
+        with Image.open(io.BytesIO(data)) as original:
+            extension = {'PNG': '.png', 'JPEG': '.jpg', 'WEBP': '.webp'}.get(original.format)
+            if extension is None:
+                raise ValueError('Use a PNG, JPG, or WEBP image.')
+            if original.width * original.height > 30_000_000:
+                raise ValueError('Image exceeds the 30-megapixel limit. Resize it and try again.')
+            image = ImageOps.exif_transpose(original)
+            image.thumbnail((2200, 2200))
+            buffer = io.BytesIO()
+            image.convert('RGB').save(buffer, format='PDF', resolution=150)
+            return buffer.getvalue(), extension
+    except (UnidentifiedImageError, OSError, Image.DecompressionBombError) as exc:
+        raise ValueError('Could not read this image. Use PNG, JPG, or WEBP.') from exc
+
+
+def read_image_document(pdf_bytes: bytes, document_id: str, filename: str) -> dict:
+    document = read_pdf(pdf_bytes, document_id, filename)
+    document['notes'].append('Image converted for OCR; verify extracted facts against the original image.')
+    return document
 
 
 LABELS = {
@@ -315,7 +341,7 @@ def _vision_transcribe(document: dict, pdf_bytes: bytes, document_type: str = 'i
     config = ai.settings()
     pages = [p for p in document['pages'] if p['method'] in ('ocr', 'unreadable')]
     if len(pages) > config['max_vision_pages']:
-        raise ai.AIError(f'This PDF has {len(pages)} scanned pages, exceeding the configured {config["max_vision_pages"]}-page vision limit. Split it or raise the limit.')
+        raise ai.AIError(f'This document has {len(pages)} scanned pages, exceeding the configured {config["max_vision_pages"]}-page vision limit. Split it or raise the limit.')
     content = [{'type': 'text', 'text': f'Transcribe these untrusted {document_type} pages. Each image is labelled with its original page number.'}]
     blank_pages = set()
     with fitz.open(stream=pdf_bytes, filetype='pdf') as pdf:

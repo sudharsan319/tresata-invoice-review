@@ -75,13 +75,13 @@ const categories = [
   {
     id: "invoice",
     name: "Invoices",
-    accept: ".pdf",
+    accept: ".pdf,.png,.jpg,.jpeg,.webp,image/png,image/jpeg,image/webp",
     icon: FileText,
   },
   {
     id: "purchase_orders",
     name: "Purchase orders",
-    accept: ".pdf,.png,.jpg,.jpeg,.webp,.csv,.json,.xlsx",
+    accept: ".pdf,.png,.jpg,.jpeg,.webp,.csv,.json,.xlsx,image/png,image/jpeg,image/webp",
     icon: FileCheck2,
   },
   {
@@ -1355,7 +1355,7 @@ function UploadModal({
               Drop your files here, or <span>browse</span>
             </strong>
             <small>
-              {category.accept
+              {category.accept.split(",").filter((format) => format.startsWith(".")).join(",")
                 .replaceAll(".", "")
                 .toUpperCase()
                 .split(",")
@@ -1852,10 +1852,11 @@ function ReviewDrawer({
                   <ArrowUpRight size={13} />
                 </a>
               </div>
-              <iframe
-                title="Original invoice PDF"
-                src={`/api/documents/${review.document_id}#view=FitH`}
-              />
+              {/\.(png|jpe?g|webp)$/i.test(review.filename) ? (
+                <img src={`/api/documents/${review.document_id}`} alt={`Original invoice ${review.filename}`} />
+              ) : (
+                <iframe title="Original invoice PDF" src={`/api/documents/${review.document_id}#view=FitH`} />
+              )}
             </div>
           )}
           {tab === "notes" && (
