@@ -1,0 +1,23 @@
+[
+  {
+    "vendor_id": "V001",
+    "name": "Northstar Cloud Services",
+    "status": "active",
+    "tax_id": "29ABCDE1234F1Z5",
+    "bank_account": "123456789012"
+  },
+  {
+    "vendor_id": "V002",
+    "name": "Oakline Office Supplies",
+    "status": "approved",
+    "tax_id": "29FGHIJ5678K1Z2",
+    "bank_account": "234567890123"
+  },
+  {
+    "vendor_id": "V003",
+    "name": "Summit Consulting",
+    "status": "blocked",
+    "tax_id": "29KLMNO9012P1Z9",
+    "bank_account": "345678901234"
+  }
+]

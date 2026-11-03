@@ -1,0 +1,2145 @@
+{
+  "generated_on": "2026-10-31",
+  "mode": "Local extraction and OCR; external LLM disabled",
+  "invoice_count": 31,
+  "pdf_count": 33,
+  "upload_order": "Reference JSON files first, then invoices in ascending filename order.",
+  "cases": [
+    {
+      "file": "invoices/01-ready.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Valid invoice; exact vendor, PO, line, and arithmetic checks.",
+      "expected_business_outcome": "ready",
+      "observed_local_outcome": "ready",
+      "matches_expectation": true,
+      "sha256": "356e208ce78aa0ec8cb2ecf90373360b74fbd7ee89b444081b60b44c6d31f416",
+      "unresolved_checks": [],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "NS-1042",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "PO-1001",
+        "currency": "INR",
+        "subtotal": "8000",
+        "tax_amount": "1440",
+        "total": "9440",
+        "bank_account": "123456789012",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Cloud service seats",
+            "sku": "",
+            "quantity": "8",
+            "unit_price": "1000",
+            "amount": "8000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "01-ready.pdf",
+              "page": 1,
+              "excerpt": "Cloud service seats | 8 | 1000 | 8000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: NS-1042",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1001",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 8000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 1440",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 9440",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "01-ready.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 123456789012",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/02-within-tolerance.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Valid invoice; exact vendor, PO, line, and arithmetic checks.",
+      "expected_business_outcome": "ready",
+      "observed_local_outcome": "ready",
+      "matches_expectation": true,
+      "sha256": "ef8ce9628aff6c5e85f3dc167db28cfc7f9ca9ea750cb74abaed6050c3e4df7f",
+      "unresolved_checks": [],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "OAK-204",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Oakline Office Supplies",
+        "vendor_id": "V002",
+        "tax_id": "29FGHIJ5678K1Z2",
+        "po_number": "PO-1002",
+        "currency": "INR",
+        "subtotal": "5050",
+        "tax_amount": "0",
+        "total": "5050",
+        "bank_account": "234567890123",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Office supply kits",
+            "sku": "",
+            "quantity": "5",
+            "unit_price": "1010",
+            "amount": "5050",
+            "evidence": {
+              "document_id": "base",
+              "filename": "02-within-tolerance.pdf",
+              "page": 1,
+              "excerpt": "Office supply kits | 5 | 1010 | 5050",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: OAK-204",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Oakline Office Supplies",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V002",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29FGHIJ5678K1Z2",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1002",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 5050",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 0",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 5050",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "02-within-tolerance.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 234567890123",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/03-duplicate.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Duplicate, blocked vendor, or changed bank account.",
+      "expected_business_outcome": "hold",
+      "observed_local_outcome": "hold",
+      "matches_expectation": true,
+      "sha256": "23bc038fa7f080421a90e1944b3df703b5df299d591527be93435535071828a2",
+      "unresolved_checks": [
+        "duplicate"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "NS-0998",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "PO-1001",
+        "currency": "INR",
+        "subtotal": "4000",
+        "tax_amount": "720",
+        "total": "4720",
+        "bank_account": "123456789012",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Cloud service seats",
+            "sku": "",
+            "quantity": "4",
+            "unit_price": "1000",
+            "amount": "4000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "03-duplicate.pdf",
+              "page": 1,
+              "excerpt": "Cloud service seats | 4 | 1000 | 4000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: NS-0998",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1001",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 4000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 720",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 4720",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "03-duplicate.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 123456789012",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/04-blocked-vendor.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Duplicate, blocked vendor, or changed bank account.",
+      "expected_business_outcome": "hold",
+      "observed_local_outcome": "hold",
+      "matches_expectation": true,
+      "sha256": "ea12aff37f49cb1a241e70d60ba9edefa8295e5a792b70ffe1df98d8ddb75e47",
+      "unresolved_checks": [
+        "vendor_status"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "SUM-301",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Summit Consulting",
+        "vendor_id": "V003",
+        "tax_id": "29KLMNO9012P1Z9",
+        "po_number": "PO-1003",
+        "currency": "INR",
+        "subtotal": "2000",
+        "tax_amount": "0",
+        "total": "2000",
+        "bank_account": "345678901234",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Consulting hours",
+            "sku": "",
+            "quantity": "2",
+            "unit_price": "1000",
+            "amount": "2000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "04-blocked-vendor.pdf",
+              "page": 1,
+              "excerpt": "Consulting hours | 2 | 1000 | 2000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: SUM-301",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Summit Consulting",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V003",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29KLMNO9012P1Z9",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1003",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 2000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 0",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 2000",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "04-blocked-vendor.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 345678901234",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/05-bank-changed.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Duplicate, blocked vendor, or changed bank account.",
+      "expected_business_outcome": "hold",
+      "observed_local_outcome": "hold",
+      "matches_expectation": true,
+      "sha256": "ea2e1b097d5ea08d6f644c482e1064c99b4b54e453c47ddd270bea49ffb79dc1",
+      "unresolved_checks": [
+        "bank_match"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "NS-1043",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "PO-1001",
+        "currency": "INR",
+        "subtotal": "2000",
+        "tax_amount": "0",
+        "total": "2000",
+        "bank_account": "999999999999",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Cloud service seats",
+            "sku": "",
+            "quantity": "2",
+            "unit_price": "1000",
+            "amount": "2000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "05-bank-changed.pdf",
+              "page": 1,
+              "excerpt": "Cloud service seats | 2 | 1000 | 2000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: NS-1043",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1001",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 2000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 0",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 2000",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "05-bank-changed.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 999999999999",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/06-missing-po.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Missing identifiers or inconsistent amounts.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "2b04d8df72ec953f3af1dc2a615b8c567e494a059cec62ed9a8afab42fb8439b",
+      "unresolved_checks": [
+        "po_match"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "NS-1044",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "",
+        "currency": "INR",
+        "subtotal": "2000",
+        "tax_amount": "0",
+        "total": "2000",
+        "bank_account": "123456789012",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Cloud service seats",
+            "sku": "",
+            "quantity": "2",
+            "unit_price": "1000",
+            "amount": "2000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "06-missing-po.pdf",
+              "page": 1,
+              "excerpt": "Cloud service seats | 2 | 1000 | 2000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: NS-1044",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 2000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 0",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 2000",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "06-missing-po.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 123456789012",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/07-over-po-balance.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "PO capacity, quantity, or unit-price discrepancy.",
+      "expected_business_outcome": "procurement",
+      "observed_local_outcome": "procurement",
+      "matches_expectation": true,
+      "sha256": "550b80e33b36c00e2a1921a05e112b0a978b43aba5c2cd60f0a8594a27911cce",
+      "unresolved_checks": [
+        "po_balance",
+        "item_0"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "NS-1045",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "PO-1004",
+        "currency": "INR",
+        "subtotal": "4000",
+        "tax_amount": "0",
+        "total": "4000",
+        "bank_account": "123456789012",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Support visits",
+            "sku": "",
+            "quantity": "4",
+            "unit_price": "1000",
+            "amount": "4000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "07-over-po-balance.pdf",
+              "page": 1,
+              "excerpt": "Support visits | 4 | 1000 | 4000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: NS-1045",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1004",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 4000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 0",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 4000",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "07-over-po-balance.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 123456789012",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/08-rate-mismatch.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "PO capacity, quantity, or unit-price discrepancy.",
+      "expected_business_outcome": "procurement",
+      "observed_local_outcome": "procurement",
+      "matches_expectation": true,
+      "sha256": "baef842c6df04fffb6c620d3a282bd15bd6d796a1c7064021db0c3fa2128db14",
+      "unresolved_checks": [
+        "item_0"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "NS-1046",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "PO-1005",
+        "currency": "INR",
+        "subtotal": "2800",
+        "tax_amount": "0",
+        "total": "2800",
+        "bank_account": "123456789012",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Platform licenses",
+            "sku": "",
+            "quantity": "2",
+            "unit_price": "1400",
+            "amount": "2800",
+            "evidence": {
+              "document_id": "base",
+              "filename": "08-rate-mismatch.pdf",
+              "page": 1,
+              "excerpt": "Platform licenses | 2 | 1400 | 2800",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: NS-1046",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1005",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 2800",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 0",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 2800",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "08-rate-mismatch.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 123456789012",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/09-missing-number.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Missing identifiers or inconsistent amounts.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "6ab3fd80b04ed242074ed8e20c574b7e49879c23faa8529a744bc95edd42205d",
+      "unresolved_checks": [
+        "required_fields",
+        "duplicate"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "PO-1001",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "bank_account": "123456789012",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Cloud service seats",
+            "sku": "",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "09-missing-number.pdf",
+              "page": 1,
+              "excerpt": "Cloud service seats | 1 | 1000 | 1000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1001",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 1000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 0",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 1000",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "09-missing-number.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 123456789012",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/10-tax-discrepancy.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Missing identifiers or inconsistent amounts.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "699d832161058ed89d351853ffa7ea0a599132e936bbacc3cd9bf67b9ef5ffb9",
+      "unresolved_checks": [
+        "tax_math"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "NS-1047",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "PO-1001",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "180",
+        "total": "1300",
+        "bank_account": "123456789012",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Cloud service seats",
+            "sku": "",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "10-tax-discrepancy.pdf",
+              "page": 1,
+              "excerpt": "Cloud service seats | 1 | 1000 | 1000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: NS-1047",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1001",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 1000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 180",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 1300",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "10-tax-discrepancy.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 123456789012",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/11-partial-invoice.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Valid invoice; exact vendor, PO, line, and arithmetic checks.",
+      "expected_business_outcome": "ready",
+      "observed_local_outcome": "ready",
+      "matches_expectation": true,
+      "sha256": "2ccca4cbe0d93b3d5649b364c783d8e427fe7082e60c5b0915860b4c1e0369fe",
+      "unresolved_checks": [],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "NS-1048",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "PO-1001",
+        "currency": "INR",
+        "subtotal": "4000",
+        "tax_amount": "0",
+        "total": "4000",
+        "bank_account": "123456789012",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Cloud service seats",
+            "sku": "",
+            "quantity": "4",
+            "unit_price": "1000",
+            "amount": "4000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "11-partial-invoice.pdf",
+              "page": 1,
+              "excerpt": "Cloud service seats | 4 | 1000 | 4000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: NS-1048",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1001",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 4000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 0",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 4000",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "11-partial-invoice.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 123456789012",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/12-batch-capacity.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "PO capacity, quantity, or unit-price discrepancy.",
+      "expected_business_outcome": "procurement",
+      "observed_local_outcome": "procurement",
+      "matches_expectation": true,
+      "sha256": "9c71a304ed05f6dbb00ba52c3a8079836af9203b06d4636daad738a4ed6d9023",
+      "unresolved_checks": [
+        "po_balance",
+        "item_0"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "NS-1049",
+        "invoice_date": "2026-10-28",
+        "due_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "po_number": "PO-1001",
+        "currency": "INR",
+        "subtotal": "6000",
+        "tax_amount": "0",
+        "total": "6000",
+        "bank_account": "123456789012",
+        "tax_inclusive": false,
+        "items": [
+          {
+            "description": "Cloud service seats",
+            "sku": "",
+            "quantity": "6",
+            "unit_price": "1000",
+            "amount": "6000",
+            "evidence": {
+              "document_id": "base",
+              "filename": "12-batch-capacity.pdf",
+              "page": 1,
+              "excerpt": "Cloud service seats | 6 | 1000 | 6000",
+              "method": "text"
+            }
+          }
+        ],
+        "evidence": {
+          "invoice_number": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Invoice Number: NS-1049",
+            "method": "text"
+          },
+          "invoice_date": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Invoice Date: 2026-10-28",
+            "method": "text"
+          },
+          "vendor_name": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Vendor Name: Northstar Cloud Services",
+            "method": "text"
+          },
+          "vendor_id": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Vendor ID: V001",
+            "method": "text"
+          },
+          "tax_id": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Tax ID: 29ABCDE1234F1Z5",
+            "method": "text"
+          },
+          "po_number": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "PO Number: PO-1001",
+            "method": "text"
+          },
+          "currency": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Currency: INR",
+            "method": "text"
+          },
+          "subtotal": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Subtotal: 6000",
+            "method": "text"
+          },
+          "tax_amount": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Total Tax: 0",
+            "method": "text"
+          },
+          "total": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Invoice Total: 6000",
+            "method": "text"
+          },
+          "bank_account": {
+            "document_id": "base",
+            "filename": "12-batch-capacity.pdf",
+            "page": 1,
+            "excerpt": "Bank Account: 123456789012",
+            "method": "text"
+          }
+        },
+        "extraction_notes": [],
+        "extraction_method": "local"
+      }
+    },
+    {
+      "file": "invoices/13-scanned-invoice.pdf",
+      "synthetic": true,
+      "format": "scan",
+      "test_focus": "Image-only PDF: OCR must be verified by a human.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "5f09aa50b345d72dec42b963fcec3cf38aab8331a59c6937c00aebc78f470095",
+      "unresolved_checks": [
+        "extraction_review"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-013",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F013",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/14-positioned-table.pdf",
+      "synthetic": true,
+      "format": "table",
+      "test_focus": "Native PDF with a real positioned item table and separate columns.",
+      "expected_business_outcome": "ready",
+      "observed_local_outcome": "ready",
+      "matches_expectation": true,
+      "sha256": "f786e5d027f50465c01d4e404f8b35f5476f16adb32b41e5b4e0431e9949ef52",
+      "unresolved_checks": [],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-014",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F014",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/15-three-page-invoice.pdf",
+      "synthetic": true,
+      "format": "multipage",
+      "test_focus": "Identity on page 1, item schedule on page 2, totals on page 3.",
+      "expected_business_outcome": "ready",
+      "observed_local_outcome": "ready",
+      "matches_expectation": true,
+      "sha256": "7ffcb87e5a9e64f368ff030dd6bfddd77bd59d62ef2ac0ea9de8957bb394f9cf",
+      "unresolved_checks": [],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-015",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F015",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/16-mixed-text-and-scan.pdf",
+      "synthetic": true,
+      "format": "mixed",
+      "test_focus": "Native cover page with scanned item/totals page; per-page extraction.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "8a8df1df099424a8c98b12ecf419436cad7d9679cc31c629d0a502ebfaa2d735",
+      "unresolved_checks": [
+        "extraction_review",
+        "line_math"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-016",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F016",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/17-low-contrast-scan.pdf",
+      "synthetic": true,
+      "format": "low_contrast",
+      "test_focus": "Faded grayscale scan intentionally tests OCR uncertainty.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "6a9ffd04272c55cc845a114af7369d7b6d8b006a4aee0ff50f7a2f785aaff71d",
+      "unresolved_checks": [
+        "required_fields",
+        "extraction_review",
+        "tax_math",
+        "line_math",
+        "vendor_identity",
+        "duplicate",
+        "po_match"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-017",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F017",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/18-sideways-scan.pdf",
+      "synthetic": true,
+      "format": "rotated",
+      "test_focus": "Image rotated 90 degrees; manual rotation/verification may be needed.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "hold",
+      "matches_expectation": false,
+      "sha256": "2991165cd8e57b50c86d30ad0a031f4d159ade436b8109d04b488d3d0eb3988b",
+      "unresolved_checks": [
+        "required_fields",
+        "currency_format",
+        "extraction_review",
+        "bank_match",
+        "po_currency",
+        "item_0"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-018",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F018",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/19-tax-inclusive-gross-po.pdf",
+      "synthetic": true,
+      "format": "table",
+      "test_focus": "Gross PO and tax-inclusive line rate use the same comparison basis.",
+      "expected_business_outcome": "ready",
+      "observed_local_outcome": "ready",
+      "matches_expectation": true,
+      "sha256": "bdd78a08cc662efb00afbbca15081758f539181be54800cde668e2f750a31a03",
+      "unresolved_checks": [],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-019",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F019",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "180",
+        "total": "1180",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1180",
+            "amount": "1180"
+          }
+        ],
+        "tax_inclusive": true
+      }
+    },
+    {
+      "file": "invoices/20-cgst-sgst-components.pdf",
+      "synthetic": true,
+      "format": "split_gst",
+      "test_focus": "CGST 9% plus SGST 9% must sum to the explicit tax amount.",
+      "expected_business_outcome": "ready",
+      "observed_local_outcome": "ready",
+      "matches_expectation": true,
+      "sha256": "8731c4784968a9ad59cd29b5e7406656c146b6fbf97b983d2c7ead6c233ec642",
+      "unresolved_checks": [],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-020",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F020",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "180",
+        "total": "1180",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/21-currency-mismatch.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "USD invoice against INR purchase order; no implicit conversion.",
+      "expected_business_outcome": "procurement",
+      "observed_local_outcome": "procurement",
+      "matches_expectation": true,
+      "sha256": "7b6871b73e2f0dbd2362aabb38f65f28b62ca04f8d62cd6dc534d1bd95313563",
+      "unresolved_checks": [
+        "po_currency"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-021",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F021",
+        "currency": "USD",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/22-ambiguous-numeric-date.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "01/02/2026 is ambiguous; date locale must be confirmed.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "e0057c1af22e14753c2bfbadef91ecb2323fbc29fb03b7fa34721664c4ce1c90",
+      "unresolved_checks": [
+        "required_fields",
+        "extraction_review"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-022",
+        "invoice_date": "01/02/2026",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F022",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/23-different-item-description.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Same amounts but different item wording; equivalence requires review.",
+      "expected_business_outcome": "procurement",
+      "observed_local_outcome": "procurement",
+      "matches_expectation": true,
+      "sha256": "602a4da7b88aa82d561d5fe1cf5156171f6fe216021d061e76f03808a45e3cd7",
+      "unresolved_checks": [
+        "item_0"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-023",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F023",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Managed archive capacity",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/24-identical-resubmission.pdf",
+      "synthetic": true,
+      "format": "identical copy",
+      "test_focus": "Exact byte-for-byte duplicate of case 14, submitted under another filename.",
+      "expected_business_outcome": "hold",
+      "observed_local_outcome": "hold",
+      "matches_expectation": true,
+      "sha256": "f786e5d027f50465c01d4e404f8b35f5476f16adb32b41e5b4e0431e9949ef52",
+      "unresolved_checks": [
+        "duplicate"
+      ],
+      "upload_error": null,
+      "invoice_truth": null
+    },
+    {
+      "file": "invoices/25-blank-document.pdf",
+      "synthetic": true,
+      "format": "blank",
+      "test_focus": "A valid empty PDF page; no fields may be invented.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "14e58c01fe7fa0650e84789de54de65feb859d80698db633a7d9030ab26ff851",
+      "unresolved_checks": [
+        "required_fields",
+        "extraction_review",
+        "tax_math",
+        "line_math",
+        "vendor_identity",
+        "duplicate",
+        "po_match"
+      ],
+      "upload_error": null,
+      "invoice_truth": null
+    },
+    {
+      "file": "invoices/26-password-protected.pdf",
+      "synthetic": true,
+      "format": "password",
+      "test_focus": "Encrypted PDF. Expected upload error; password is sample123.",
+      "expected_business_outcome": "upload_rejected",
+      "observed_local_outcome": "upload_rejected",
+      "matches_expectation": true,
+      "sha256": "0578e80651927e378dd16ce018af8349b8e28fbbea627dde5daaba4c18048f7f",
+      "unresolved_checks": [],
+      "upload_error": "Password-protected PDF. Upload an unlocked copy.",
+      "invoice_truth": {
+        "invoice_number": "FMT-026",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F026",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/27-missing-invoice-date.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Invoice date deliberately omitted.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "4b70dab9ebe673e492c0683307c3eaa4075bcd856e2ac36a9fbaac50569163b5",
+      "unresolved_checks": [
+        "required_fields"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-027",
+        "invoice_date": "",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F027",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/28-credit-note.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Negative credit-note amounts require a separate workflow.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "c107438038d55ee01c8f8c1b7af57b05b877847ca826286851273fec1a044ec8",
+      "unresolved_checks": [
+        "positive_amount",
+        "line_math"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-028",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F028",
+        "currency": "INR",
+        "subtotal": "-1000",
+        "tax_amount": "-180",
+        "total": "-1180",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "-1",
+            "unit_price": "1000",
+            "amount": "-1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/29-unregistered-vendor.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "Vendor absent from approved master and PO reference missing.",
+      "expected_business_outcome": "clarification",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": true,
+      "sha256": "60434ec8d809be1432f3cda53befeed16a9f741d66ca04fc74fd520c2c87ebb6",
+      "unresolved_checks": [
+        "vendor_identity",
+        "duplicate",
+        "po_match"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-029",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Unregistered Sample Services",
+        "vendor_id": "V999",
+        "tax_id": "SYNTHETIC-UNKNOWN",
+        "bank_account": "000000000001",
+        "po_number": "",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/30-cancelled-po.pdf",
+      "synthetic": true,
+      "format": "standard",
+      "test_focus": "PO exists but is cancelled; valid amounts are insufficient.",
+      "expected_business_outcome": "procurement",
+      "observed_local_outcome": "procurement",
+      "matches_expectation": true,
+      "sha256": "6ed28927e11409b7aac748c37ae2aa79e52915325c3a620e29ab525bf9d74753",
+      "unresolved_checks": [
+        "po_approval"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-030",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F030",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    },
+    {
+      "file": "invoices/31-two-column-metadata.pdf",
+      "synthetic": true,
+      "format": "two_column",
+      "test_focus": "Difficult two-column metadata layout; semantically valid invoice. Exposes local-parser limitations.",
+      "expected_business_outcome": "ready",
+      "observed_local_outcome": "clarification",
+      "matches_expectation": false,
+      "sha256": "c732baaf71a95174d0cd391438e58d724fb0411cb36da2ea53b7c4697dc723d9",
+      "unresolved_checks": [
+        "required_fields",
+        "vendor_identity",
+        "duplicate",
+        "po_match"
+      ],
+      "upload_error": null,
+      "invoice_truth": {
+        "invoice_number": "FMT-031",
+        "invoice_date": "2026-10-28",
+        "vendor_name": "Northstar Cloud Services",
+        "vendor_id": "V001",
+        "tax_id": "29ABCDE1234F1Z5",
+        "bank_account": "123456789012",
+        "po_number": "PO-F031",
+        "currency": "INR",
+        "subtotal": "1000",
+        "tax_amount": "0",
+        "total": "1000",
+        "items": [
+          {
+            "description": "Storage units",
+            "quantity": "1",
+            "unit_price": "1000",
+            "amount": "1000"
+          }
+        ]
+      }
+    }
+  ]
+}

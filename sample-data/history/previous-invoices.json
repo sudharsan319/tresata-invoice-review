@@ -1,0 +1,19 @@
+[
+  {
+    "invoice_number": "NS-0998",
+    "vendor_id": "V001",
+    "po_number": "PO-1001",
+    "currency": "INR",
+    "subtotal": "4000",
+    "total": "4720",
+    "status": "paid",
+    "items": [
+      {
+        "description": "Cloud service seats",
+        "quantity": 4,
+        "unit_price": "1000",
+        "amount": "4000"
+      }
+    ]
+  }
+]

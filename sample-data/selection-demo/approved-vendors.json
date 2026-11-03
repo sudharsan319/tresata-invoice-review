@@ -1,0 +1,23 @@
+[
+  {
+    "vendor_id": "SEL-ASTER",
+    "name": "Aster Cloud Ltd",
+    "status": "active",
+    "tax_id": "29ABCDE1234F1Z5",
+    "bank_account": "100000000001"
+  },
+  {
+    "vendor_id": "SEL-BLUE",
+    "name": "Blueleaf Office Supplies",
+    "status": "active",
+    "tax_id": "29FGHIJ5678K1Z2",
+    "bank_account": "200000000002"
+  },
+  {
+    "vendor_id": "SEL-CEDAR",
+    "name": "Cedar Logistics Pvt Ltd",
+    "status": "active",
+    "tax_id": "29KLMNO9012P1Z9",
+    "bank_account": "300000000003"
+  }
+]

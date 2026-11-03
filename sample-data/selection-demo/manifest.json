@@ -1,0 +1,137 @@
+{
+  "synthetic": true,
+  "purchase_orders": [
+    {
+      "po_number": "PO-SEL-001",
+      "vendor_id": "SEL-ASTER",
+      "vendor_name": "Aster Cloud Ltd",
+      "currency": "INR",
+      "amount": "10000",
+      "amount_basis": "net",
+      "status": "approved",
+      "valid_from": "2026-08-05",
+      "valid_to": "2027-11-03",
+      "items": [
+        {
+          "description": "Software seats",
+          "quantity": 10,
+          "unit_price": "1000",
+          "amount": "10000"
+        }
+      ]
+    },
+    {
+      "po_number": "PO-SEL-002",
+      "vendor_id": "SEL-ASTER",
+      "vendor_name": "Aster Cloud Ltd",
+      "currency": "INR",
+      "amount": "4000",
+      "amount_basis": "net",
+      "status": "approved",
+      "valid_from": "2026-08-05",
+      "valid_to": "2027-11-03",
+      "items": [
+        {
+          "description": "Support hours",
+          "quantity": 8,
+          "unit_price": "500",
+          "amount": "4000"
+        }
+      ]
+    },
+    {
+      "po_number": "PO-SEL-003",
+      "vendor_id": "SEL-BLUE",
+      "vendor_name": "Blueleaf Office Supplies",
+      "currency": "INR",
+      "amount": "1800",
+      "amount_basis": "net",
+      "status": "approved",
+      "valid_from": "2026-08-05",
+      "valid_to": "2027-11-03",
+      "items": [
+        {
+          "description": "Office supply kits",
+          "quantity": 6,
+          "unit_price": "300",
+          "amount": "1800"
+        }
+      ]
+    },
+    {
+      "po_number": "PO-SEL-004",
+      "vendor_id": "SEL-CEDAR",
+      "vendor_name": "Cedar Logistics Pvt Ltd",
+      "currency": "INR",
+      "amount": "10000",
+      "amount_basis": "net",
+      "status": "approved",
+      "valid_from": "2026-08-05",
+      "valid_to": "2027-11-03",
+      "items": [
+        {
+          "description": "Delivery trips",
+          "quantity": 5,
+          "unit_price": "2000",
+          "amount": "10000"
+        }
+      ]
+    }
+  ],
+  "invoices": [
+    {
+      "filename": "01-aster-partial-first.pdf",
+      "invoice_number": "INV-SEL-001",
+      "po_number": "PO-SEL-001",
+      "vendor": "Aster Cloud Ltd",
+      "net_amount": "4000",
+      "tax": "720",
+      "scenario": "First instalment, leaving six software seats."
+    },
+    {
+      "filename": "02-aster-partial-final.pdf",
+      "invoice_number": "INV-SEL-002",
+      "po_number": "PO-SEL-001",
+      "vendor": "Aster Cloud Ltd",
+      "net_amount": "6000",
+      "tax": "1080",
+      "scenario": "Second instalment, using the remaining six seats."
+    },
+    {
+      "filename": "03-aster-taxed-service.pdf",
+      "invoice_number": "INV-SEL-003",
+      "po_number": "PO-SEL-002",
+      "vendor": "Aster Cloud Ltd",
+      "net_amount": "2000",
+      "tax": "360",
+      "scenario": "A taxed service invoice from the same vendor on a different PO."
+    },
+    {
+      "filename": "04-blueleaf-scanned.pdf",
+      "invoice_number": "INV-SEL-004",
+      "po_number": "PO-SEL-003",
+      "vendor": "Blueleaf Office Supplies",
+      "net_amount": "1800",
+      "tax": "0",
+      "scenario": "A scanned invoice from another vendor; OCR needs visual review."
+    },
+    {
+      "filename": "05-cedar-partial-first.pdf",
+      "invoice_number": "INV-SEL-005",
+      "po_number": "PO-SEL-004",
+      "vendor": "Cedar Logistics Pvt Ltd",
+      "net_amount": "6000",
+      "tax": "1080",
+      "scenario": "First delivery invoice, leaving two authorized trips."
+    },
+    {
+      "filename": "06-cedar-partial-over-limit.pdf",
+      "invoice_number": "INV-SEL-006",
+      "po_number": "PO-SEL-004",
+      "vendor": "Cedar Logistics Pvt Ltd",
+      "net_amount": "6000",
+      "tax": "1080",
+      "scenario": "Second delivery invoice; combined quantity is six against five on the PO."
+    }
+  ]
+}

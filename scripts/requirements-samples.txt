@@ -1,0 +1,2 @@
+# Optional PDF sample-authoring dependency; not needed to run the app.
+reportlab==4.5.1

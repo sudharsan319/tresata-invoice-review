@@ -1,0 +1,9 @@
+{
+  "name": "Demo \u00b7 controlled purchasing",
+  "amount_tolerance_percent": "2",
+  "amount_tolerance_absolute": "0",
+  "unit_price_tolerance_percent": "1",
+  "require_line_items": true,
+  "check_bank_details": true,
+  "max_invoice_age_days": 365
+}
