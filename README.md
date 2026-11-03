@@ -26,6 +26,10 @@ Open **http://127.0.0.1:5173**. Vite proxies `/api` to the backend at port 8000.
 
 If Python reports that `venv` or `ensurepip` is missing on Ubuntu/Debian, install the matching `python3-venv` system package first. All installed application dependencies are isolated in `.venv/` and `frontend/node_modules/`.
 
+## Development history
+
+The initial architecture and decision-engine discussion is available in the [shared ChatGPT conversation](https://chatgpt.com/share/6ae99163-01d8-83ee-93a2-cca3bacb6249). **Codex was used to build the final working application** from that architecture through additional implementation prompts. Examples of those later requests include fixing PDF upload, adding a dark theme, processing purchase orders from PDFs and images, checking split invoices against a PO, and preserving review progress after a reload. The shared conversation covers the architecture discussion; it is not a complete transcript of the later Codex implementation work.
+
 ## Try the complete workflow
 
 1. Select **Try 13 sample invoices** in an empty workspace. The PDFs and supporting records are synthetic and go through the real extraction/checking pipeline.
@@ -225,7 +229,7 @@ cd frontend
 npm run build
 ```
 
-The suite exercises 12 real PDF scenarios plus scanned-PDF and standalone-image OCR, mixed-currency rejection, tax arithmetic, historical and current-batch PO commitments, cumulative quantities, duplicate identity scope, changed bank details, protected PDFs, unsupported policies, CSV/XLSX/PO-PDF imports, source removal, correction audit trails, AI grounding/fallback, and API restrictions. See `VALIDATION.md` for the verified result.
+The suite exercises PDF and image extraction, invoice decision scenarios, PO commitments, reference imports, correction history, AI grounding, and API restrictions.
 
 ## Practical boundaries
 
